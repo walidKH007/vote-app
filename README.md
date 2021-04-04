@@ -87,46 +87,62 @@ Donc on va commencer par crée l’api Gateway on cliquons sur créer une API :
 
 ![api](images/api-1.jpg)
 
-
 Puis on va choisir API qu’on veut utiliser :
 
 ![api](images/api-2.jpg)
-
-
 
 Puis on va donner un nom à notre api puis la région avec la quel on travaille sur aws.
 
 ![api](images/api-3.jpg)
 
-
 Là on voit que notre API a était crée avec succès.
 
 ![api](images/api-4.jpg)
-
 
 Après on a créé les ressources et les méthodes pour l’API REST
 
 ![api](images/api-5.jpg)
 
-
 Sur la capture ci-dessous on voit bien que la communication entre l’api et les fonctions Lambda était établie.
 
 ![api](images/api-6.jpg)
 
-
 Après on a déployer notre API.
-
 
 ![api](images/api-7.jpg)
 
-
 La capture ci-dessous montre que notre API était déployée successivement.
 
-![api](images/api-8.jpg)
-
-
+![api](images/api-8.png)
 
 Test de API après le déploiement.
 
-
 ![api](images/api-9.jpg)
+
+## AWS Elastic Benstalk
+
+On commence par la création de notre application Elastic Benstalk.
+
+![Benstalk](images/Benstalk-1.jpg)
+
+Après on vas créer notre environnement.
+
+![Benstalk](images/Benstalk-2.jpg)
+
+Puis on a choisi PHP comme la plateforme de programmation.
+
+![Benstalk](images/Benstalk-3.jpg)
+
+Test de fonctionnement
+
+![Benstalk](images/Benstalk-4.jpg)
+
+Comme nous constate sur la figure ci-dessus que notre URL est accessible.
+
+Après cette étape on a créé notre code PHP pour faire appel aux fonctions Lambda qu’on a créé précédemment. Ensuite on a déployé notre code.
+
+Lien de test : http://votingapp-env.eba-mn2tkvcu.us-east-1.elasticbeanstalk.com/
+
+![Benstalk](images/Benstalk-5.jpg)
+
+
