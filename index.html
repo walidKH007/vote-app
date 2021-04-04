@@ -1,0 +1,105 @@
+<?php
+$url = 'https://t2dgipsnka.execute-api.us-east-1.amazonaws.com/prod/candidats'; // path to your JSON file
+$data = file_get_contents($url); // put the contents of the file into a variable $characters = json_decode($data); // decode the JSON feed
+?>
+<html>
+<head>
+    <title>Serverless Vote</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bo otstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head >
+<body>
+    <div class="container">
+    <br />
+    <br />
+    <br />
+    <h2 align="center">Serverless Vote</h2><br />
+    <div class="row">
+    <div class="col-md-6">
+    <form method="POST" id="poll_form" >
+    <br />
+    <div class="radio">
+    <?php
+        foreach ($characters as $character) :
+    ?>
+    <?php
+        $candidate = $character->candidat;
+        $vote = (intval($character->vote)*100)/100;
+    ?>
+
+<label>
+    <h4>
+    ><input type="radio" name="poll_option" class="poll_option" value=<?p hp echo $candidate; ?> />
+    <?php echo $candidate;?
+    </h4>
+        </label>
+        <br />
+        <div class="row">
+        <div class="col-md-2" align="right">
+        </div>
+        <div class="col-md-10">
+        <div class="progress">
+        <div class="progress-bar" role="progressbar"
+        aria-valuenow="<?php echo $vote; ?>"
+        aria-valuemin="0" aria-valuemax="100"
+        style="width: <? php echo $vote; ?>%">
+        <?php echo $vote; ?>
+        </div>
+        </div>
+
+    <?php endforeach; ?>
+
+<br />
+<input type="submit" name="poll_button" id="poll_button" class="btn btn-primary" />
+</form>
+<?php
+if(isset($_POST['poll_button'])){
+if(!empty($_POST['poll_option'])) {
+$name =	$_POST['poll_option'];
+$url = 'https://t2dgipsnka.execute-api.us-east-1.amazonaws.com/prod/candidats/';
+$data_array =	array(
+    "candidat" => $name
+);
+
+$make_call = callAPI('POST', $url, json_encode($data_array)); $response = json_decode($make_call, true); header("Refresh:0");
+
+} else {
+echo 'Please select the value.';
+}
+}
+
+function callAPI($method, $url, $data){
+$curl = curl_init();
+switch ($method){
+case "POST":
+    curl_setopt($curl, CURLOPT_POST, 1);
+    if ($data)
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data); break;
+case "P":
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+    if ($data)
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    break;
+default:
+if ($data)
+$url = sprintf("%s?%s", $url, http_build_query($data));
+}
+
+// OPTIONS:
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json',
+));
+
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); // EXECUTE:
+
+$result = curl_exec($curl);
+header("Refresh:0");
+curl_close($curl);
+return $result;
+}
+?>
+</body>
+</html>
